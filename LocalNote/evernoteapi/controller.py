@@ -1,15 +1,17 @@
-#coding=utf8
-import sys, hashlib, re, time, mimetypes
+# coding=utf8
+import hashlib
+import mimetypes
+import re
 
 import evernote.edam.type.ttypes as Types
-import evernote.edam.notestore.NoteStore as NoteStore
-from evernote.edam.error.ttypes import EDAMUserException
 from evernote.api.client import EvernoteClient
+from evernote.edam.error.ttypes import EDAMUserException
 
 from storage import Storage
 
+
 class EvernoteController(object):
-    def __init__(self, token, isSpecialToken = False, sandbox = False, isInternational = False, notebooks = None):
+    def __init__(self, token, isSpecialToken=False, sandbox=False, isInternational=False, notebooks=None):
         self.token = token
         if sandbox:
             self.client = EvernoteClient(token=self.token)
@@ -21,12 +23,14 @@ class EvernoteController(object):
         self.userStore = self.client.get_user_store()
         self.noteStore = self.client.get_note_store()
         self.storage = Storage(notebooks)
+
     def get_upload_limit(self):
         return {
             1: 25 * 1024 * 1024,
             3: 100 * 1024 * 1024,
             5: 200 * 1024 * 1024,
         }.get(self.userStore.getUser().privilege, 0)
+
     def create_notebook(self, noteFullPath):
         if self.get(noteFullPath): return False
         notebook = Types.Notebook()
@@ -41,7 +45,8 @@ class EvernoteController(object):
                 raise e
         self.storage.create_notebook(notebook)
         return True
-    def create_note(self, noteFullPath, content = '', fileDict = {}):
+
+    def create_note(self, noteFullPath, content='', fileDict={}):
         if self.get(noteFullPath): return False
         if 1 < len(noteFullPath):
             notebook = noteFullPath[0]
@@ -72,12 +77,13 @@ class EvernoteController(object):
                 fileResource.mime = mimetypes.guess_type(fileName)[0] or 'application/octet-stream'
                 fileResource.attributes = fileAttr
                 note.resources.append(fileResource)
-                note.content += '<en-media type="%s" hash="%s"/>'%(fileResource.mime, fileData.bodyHash)
+                note.content += '<en-media type="%s" hash="%s"/>' % (fileResource.mime, fileData.bodyHash)
         note.content += '</en-note>'
         note = self.noteStore.createNote(note)
         self.storage.create_note(note, notebook)
         return True
-    def update_note(self, noteFullPath, content = None, fileDict = {}):
+
+    def update_note(self, noteFullPath, content=None, fileDict={}):
         note = self.get(noteFullPath)
         if note is None: return self.create_note(noteFullPath, content or '', fileDict)
         if 1 < len(noteFullPath):
@@ -112,12 +118,13 @@ class EvernoteController(object):
                 fileResource.mime = mimetypes.guess_type(fileName)[0] or 'application/octet-stream'
                 fileResource.attributes = fileAttr
                 note.resources.append(fileResource)
-                note.content += '<en-media type="%s" hash="%s"/>'%(fileResource.mime, fileData.bodyHash)
+                note.content += '<en-media type="%s" hash="%s"/>' % (fileResource.mime, fileData.bodyHash)
         note.content += '</en-note>'
         self.noteStore.updateNote(self.token, note)
         self.storage.delete_note(noteFullPath)
         self.storage.create_note(note, notebook)
         return True
+
     def get_content(self, noteFullPath):
         note = self.get(noteFullPath)
         if note is None: return
@@ -127,12 +134,14 @@ class EvernoteController(object):
         except:
             content = ''
         return content
+
     def get_attachment(self, noteFullPath):
         note = self.get(noteFullPath)
         attachmentDict = {}
         for resource in (self.noteStore.getNote(note.guid, False, True, False, False).resources or {}):
             attachmentDict[resource.attributes.fileName] = resource.data.body
         return attachmentDict
+
     def move_note(self, noteFullPath, _to):
         if self.get(noteFullPath) is None: return False
         if len(noteFullPath) < 2 or 1 < len(_to): raise Exception('Type Error')
@@ -143,6 +152,7 @@ class EvernoteController(object):
             self.noteStore.deleteNote(self.token, self.get(noteFullPath).guid)
         self.storage.move_note(noteFullPath, _to)
         return True
+
     def delete_note(self, noteFullPath):
         note = self.get(noteFullPath)
         if note is None: return False
@@ -150,22 +160,28 @@ class EvernoteController(object):
         self.noteStore.deleteNote(self.token, note.guid)
         self.storage.delete_note(noteFullPath)
         return True
+
     def delete_notebook(self, noteFullPath):
         if not self.get(noteFullPath) or not self.isSpecialToken: return False
         if 1 < len(noteFullPath): raise Exception('Types Error')
         self.noteStore.expungeNotebook(self.token, self.get(noteFullPath).guid)
         self.storage.delete_notebook(noteFullPath)
         return True
+
     def get(self, s):
         return self.storage.get(s)
+
     def show_notebook(self):
         self.storage.show_notebook()
+
     def show_notes(self, notebook=None):
         self.storage.show_notes(notebook)
+
     def _md5(self, s):
         m = hashlib.md5()
         m.update(s)
         return m.hexdigest()
+
 
 if __name__ == '__main__':
     # You can get this from 'https://%s/api/DeveloperToken.action'%SERVICE_HOST >>

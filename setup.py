@@ -1,12 +1,13 @@
-#coding=utf8
+# coding=utf8
 """ A command line tool to use evernote locally
 See:
 https://github.com/littlecodersh/LocalNote
 """
 
-from setuptools import setup, find_packages
 from codecs import open
 from os import path
+
+from setuptools import setup, find_packages
 
 here = path.abspath(path.dirname(__file__))
 
@@ -52,7 +53,7 @@ setup(
     extras_require={},
 
     entry_points={
-        'console_scripts':[
+        'console_scripts': [
             'localnote = LocalNote.main:main'
         ]
     },
