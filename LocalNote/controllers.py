@@ -66,8 +66,10 @@ class Controller(object):
             for lNote in lNotes:
                 for i, eNote in enumerate(eNotes):
                     if lNote[0] != eNote[0]: continue
-                    if self.ls.lastUpdate < lNote[1]:  # need upload
-                        if self.ls.lastUpdate < eNote[1] and lNote[1] < eNote[1]:  # need download
+                    if self.ls.lastUpdate < lNote[1]:
+                        if self.ls.lastUpdate < eNote[1] and lNote[1] < eNote[1]:
+                            # remote changes and local changes has diverged
+                            # TODO: do more about this situation
                             r.append(([nbName, lNote[0]], 0))
                         else:
                             # local changes,push
