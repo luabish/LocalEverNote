@@ -59,8 +59,9 @@ class Controller(object):
         noteDict = self.es.get_note_dict()
         for nbName, lNotes in fileDict.items():
             eNotes = noteDict.get(nbName)
-            if eNotes is None:  # notebook exists locally not online
-                r.append(([nbName], 0))
+            if eNotes is None:
+                # new local notebook,push
+                r.append(([nbName], 1))
                 continue
             delIndex = []
             for lNote in lNotes:
