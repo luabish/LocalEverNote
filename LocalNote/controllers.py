@@ -55,7 +55,7 @@ class Controller(object):
                       update=False):  # -1 for need download, 1 for need upload, 0 for can be uploaded and downloaded
         if not update: return self.changesList  # (fileFullPath, status)
         r = []
-        fileDict = self.ls.get_file_dict()
+        fileDict = self.ls.get_file_dict(self.notebooks)
         noteDict = self.es.get_note_dict()
         for nbName, lNotes in fileDict.items():
             eNotes = noteDict.get(nbName)
