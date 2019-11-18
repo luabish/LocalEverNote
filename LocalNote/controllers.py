@@ -70,21 +70,26 @@ class Controller(object):
                         if self.ls.lastUpdate < eNote[1] and lNote[1] < eNote[1]:  # need download
                             r.append(([nbName, lNote[0]], 0))
                         else:
+                            # local changes,push
                             r.append(([nbName, lNote[0]], 1))
                     else:
+                        # remote changes,pull
                         if self.ls.lastUpdate < eNote[1] and lNote[1] < eNote[1]:
                             r.append(([nbName, lNote[0]], -1))
                         # else:
                         # debug
                         # r.append(([nbName, lNote[0]], 2))
+                    # remote notes which match with local notes
                     delIndex.append(i)
                     break
                 else:  # note exists locally not online
                     r.append(([nbName, lNote[0]], 0))
             eNotes = [n for i, n in enumerate(eNotes) if i not in delIndex]
-            for eNote in eNotes: r.append(([nbName, eNote[0]], 0))  # note exists online not locally
+            # note exists online not locally
+            for eNote in eNotes: r.append(([nbName, eNote[0]], -1))
             del noteDict[nbName]
-        for nbName in noteDict.keys(): r.append(([nbName], 0))
+        # new remote notebook,pull
+        for nbName in noteDict.keys(): r.append(([nbName], -1))
         self.changesList = r
         return r
 
