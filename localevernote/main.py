@@ -61,11 +61,11 @@ def init(*args):
             while 1:
                 isInternational = False
                 expireTime = None
-                sandbox = sys_input(u'是否是沙盒环境？[yn] ') == 'y'
-                if not sandbox: isInternational = sys_input(u'是否是国际用户？[yn] ') == 'y'
+                sandbox = sys_input(u'是否是沙盒环境[yn]>') == 'y'
+                if not sandbox: isInternational = sys_input(u'是否是国际版用户？[yn]>') == 'y'
                 # isSpecialToken = sys_input(u'是否使用开发者Token？[yn] ') == 'y'
                 # if isSpecialToken:
-                token = sys_input(u'开发者Token: 如果还未申请请在这里申请https://dev.yinxiang.com/doc/articles/dev_tokens.php')
+                token = sys_input(u'开发者Token(如果还未申请请在这里申请https://dev.yinxiang.com/doc/articles/dev_tokens.php)>')
                 # else:
                 #     token, expireTime = Oauth(sandbox=sandbox, isInternational=isInternational).oauth()
                 #     # Use special oauth to get token
