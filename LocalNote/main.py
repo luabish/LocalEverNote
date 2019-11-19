@@ -64,18 +64,18 @@ def init(*args):
                 expireTime = None
                 sandbox = sys_input(u'是否是沙盒环境？[yn] ') == 'y'
                 if not sandbox: isInternational = sys_input(u'是否是国际用户？[yn] ') == 'y'
-                isSpecialToken = sys_input(u'是否使用开发者Token？[yn] ') == 'y'
-                if isSpecialToken:
-                    token = sys_input(u'开发者Token: ')
-                else:
-                    token, expireTime = Oauth(sandbox=sandbox, isInternational=isInternational).oauth()
-                    # Use special oauth to get token
-                    isSpecialToken = True
+                # isSpecialToken = sys_input(u'是否使用开发者Token？[yn] ') == 'y'
+                # if isSpecialToken:
+                token = sys_input(u'开发者Token: 如果还未申请请在这里申请https://dev.yinxiang.com/doc/articles/dev_tokens.php')
+                # else:
+                #     token, expireTime = Oauth(sandbox=sandbox, isInternational=isInternational).oauth()
+                #     # Use special oauth to get token
+                #     isSpecialToken = True
                 if token:
-                    mainController.log_in(token=token, isSpecialToken=isSpecialToken, sandbox=sandbox,
+                    mainController.log_in(token=token, isSpecialToken=True, sandbox=sandbox,
                                           isInternational=isInternational, expireTime=expireTime)
                     if mainController.available:
-                        mainController.ls.update_config(token=token, isSpecialToken=isSpecialToken,
+                        mainController.ls.update_config(token=token, isSpecialToken=True,
                                                         sandbox=sandbox, isInternational=isInternational,
                                                         expireTime=expireTime)
                         sys_print(u'登陆成功')
