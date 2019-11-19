@@ -3,7 +3,6 @@ import os
 import sys
 
 from controllers import Controller, convert_html
-from evernoteapi.oauth2 import Oauth
 from exception import main_wrapper
 from local import clear_dir
 

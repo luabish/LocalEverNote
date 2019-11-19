@@ -15,7 +15,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='LocalEverNote',
+    name='localevernote',
 
     version='0.1',
 
@@ -51,7 +51,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'len = LocalNote.main:main'
+            'len = localevernote.main:main'
         ]
     },
 )
