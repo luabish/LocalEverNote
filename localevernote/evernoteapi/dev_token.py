@@ -38,7 +38,7 @@ class TokenFetcher:
 
         remove_btn = self.web_driver.find_elements_by_name('remove')
         if remove_btn:
-            remove_btn.click()
+            remove_btn[0].click()
             sleep(0.5)
 
         self.web_driver.find_element_by_name('create').click()
