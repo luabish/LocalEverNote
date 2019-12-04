@@ -15,7 +15,7 @@ pip2 install -U git+https://github.com/luabish/LocalEverNote.git@master
 
 ## 确定同步目录
 
-请确定一个目录作为同步evernote的根目录，后续命令请在该目录执行。**注意，该目录在下一步登录时将被清空**
+请确定一个目录作为同步evernote的根目录，后续命令请在该目录执行。**注意，该目录必须为空**
 
 ## 登录
 
