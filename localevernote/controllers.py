@@ -19,7 +19,6 @@ class Controller(object):
         self.changesList = []
 
     def __check_available(self):
-        # TODO: expire time of dev token
         if not self.isSpecialToken and self.expireTime < time.time(): return False, None
         if self.token == '': return False, None
         try:
