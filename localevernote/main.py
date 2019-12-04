@@ -7,7 +7,8 @@ from controllers import Controller, convert_html
 from evernoteapi.dev_token import TokenFetcher
 from exception import main_wrapper
 
-DEBUG = True
+DEBUG = False
+# TODO: better way to develop
 if DEBUG:
     os.chdir('/Users/wubowen/Desktop/test')
 
