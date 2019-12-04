@@ -5,7 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
-
+from selenium.common.exceptions import StaleElementReferenceException,ElementNotInteractableException
 
 class TokenFetcher:
     # TODO：支持更多版本
@@ -29,12 +29,18 @@ class TokenFetcher:
         submit_button.click()
         sleep(0.5)
 
-        user_input = self.wait.until(ec.presence_of_element_located((By.CSS_SELECTOR, '#password')))
-        user_input.send_keys(self.p)
-        sleep(0.5)
-
-        submit_button.click()
-        sleep(1)
+        try:
+            user_input = self.wait.until(ec.presence_of_element_located((By.CSS_SELECTOR, '#password')))
+            user_input.send_keys(self.p)
+            sleep(0.5)
+            submit_button.click()
+            sleep(1)
+        except StaleElementReferenceException:
+            # password not right
+            return None
+        except ElementNotInteractableException:
+            # user not right
+            return None
 
         remove_btn = self.web_driver.find_elements_by_name('remove')
         if remove_btn:

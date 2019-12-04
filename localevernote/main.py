@@ -55,7 +55,7 @@ def check_files_format(fn):
                 else:
                     sys_print(u'刷新token失败')
             else:
-                sys_print(u'获取token失败')
+                sys_print(u'获取token失败，请检查用户名密码')
         else:
             sys_print(u'尚未初始化', 'warn')
 
@@ -96,7 +96,7 @@ def init(*args):
                         sys_print(u'登录失败')
                         if sys_input(u'重试登录？[yn] ') != 'y': break
                 else:
-                    sys_print(u'获取token失败')
+                    sys_print(u'获取token失败,请检查用户名或密码')
                     if sys_input(u'重试登录？[yn] ') != 'y': break
         else:
             sys_print(u'目录非空，无法初始化', 'warn')
