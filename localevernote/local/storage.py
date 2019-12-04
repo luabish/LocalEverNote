@@ -7,6 +7,7 @@ from os.path import join, exists
 import chardet
 
 CONFIG_DIR = 'user.cfg'
+CREDENTIAL_FILE = '.credential'
 
 
 # fileDictFormat: {
@@ -45,6 +46,15 @@ class Storage(object):
                 'expire-time': self.expireTime,
                 'last-update': self.lastUpdate,
                 'notebooks': notebooks}))
+
+    def save_credential(self, u, p):
+        with open(CREDENTIAL_FILE, 'w') as f:
+            f.write(u + '|' + p)
+
+    def get_credential(self):
+        if not os.path.exists(CREDENTIAL_FILE): return None
+        with open(CREDENTIAL_FILE, 'r')as f:
+            return f.read()
 
     def update_config(self, token=None, isSpecialToken=None, sandbox=None, isInternational=None, expireTime=None,
                       lastUpdate=None, notebooks=None):

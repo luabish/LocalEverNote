@@ -1,8 +1,10 @@
 # coding=utf8
+import getpass
 import os
 import sys
 
 from controllers import Controller, convert_html
+from evernoteapi.dev_token import TokenFetcher
 from exception import main_wrapper
 
 DEBUG = True
@@ -38,6 +40,22 @@ def check_files_format(fn):
                 sys_print(u'请确保没有文件夹格式的附件，或名为.DS_Store的笔记及笔记本。')
             else:
                 return fn(mainController, *args, **kwargs)
+        elif mainController.ls.get_credential():
+            u, p = mainController.ls.get_credential().split('|')
+            _, _, sandbox, is_international, expire_time, _, _ = mainController.ls.get_config()
+            token = TokenFetcher(is_international, u, p).fetch_token()
+            if token:
+                mainController.log_in(token=token, isSpecialToken=True, sandbox=sandbox,
+                                      isInternational=is_international, expireTime=expire_time)
+                if mainController.available:
+                    mainController.ls.update_config(token=token, isSpecialToken=True,
+                                                    sandbox=sandbox, isInternational=is_international,
+                                                    expireTime=expire_time)
+                    sys_print(u'刷新token成功')
+                else:
+                    sys_print(u'刷新token失败')
+            else:
+                sys_print(u'获取token失败')
         else:
             sys_print(u'尚未登录', 'warn')
 
@@ -60,13 +78,9 @@ def init(*args):
                 expireTime = None
                 sandbox = sys_input(u'是否是沙盒环境[yn]>') == 'y'
                 if not sandbox: isInternational = sys_input(u'是否是国际版用户？[yn]>') == 'y'
-                # isSpecialToken = sys_input(u'是否使用开发者Token？[yn] ') == 'y'
-                # if isSpecialToken:
-                token = sys_input(u'开发者Token(如果还未申请请在这里申请https://dev.yinxiang.com/doc/articles/dev_tokens.php)>')
-                # else:
-                #     token, expireTime = Oauth(sandbox=sandbox, isInternational=isInternational).oauth()
-                #     # Use special oauth to get token
-                #     isSpecialToken = True
+                u = sys_input('username')
+                p = getpass.getpass()
+                token = TokenFetcher(isInternational, u, p).fetch_token()
                 if token:
                     mainController.log_in(token=token, isSpecialToken=True, sandbox=sandbox,
                                           isInternational=isInternational, expireTime=expireTime)
@@ -75,6 +89,8 @@ def init(*args):
                                                         sandbox=sandbox, isInternational=isInternational,
                                                         expireTime=expireTime)
                         sys_print(u'登陆成功')
+                        mainController.ls.save_credential(u, p)
+                        sys_print(u'保存用户身份成功')
                         break
                     else:
                         sys_print(u'登录失败')
@@ -85,6 +101,7 @@ def init(*args):
         else:
             sys_print(u'目录非空，无法初始化', 'warn')
             return
+
     if mainController.available:
         if sys_input(u'已经登录，是否要重新登录？[yn] ') == 'y': _init(*args)
     else:
