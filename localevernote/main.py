@@ -9,7 +9,7 @@ from exception import main_wrapper
 
 DEBUG = True
 if DEBUG:
-    os.chdir('/Users/wubowen/SynologyDrive/Notes')
+    os.chdir('/Users/wubowen/Desktop/test')
 
 
 # TODO: 彻底的国际化实现
@@ -57,7 +57,7 @@ def check_files_format(fn):
             else:
                 sys_print(u'获取token失败')
         else:
-            sys_print(u'尚未登录', 'warn')
+            sys_print(u'尚未初始化', 'warn')
 
     return _check_files_format
 
@@ -96,7 +96,7 @@ def init(*args):
                         sys_print(u'登录失败')
                         if sys_input(u'重试登录？[yn] ') != 'y': break
                 else:
-                    sys_print(u'登录失败')
+                    sys_print(u'获取token失败')
                     if sys_input(u'重试登录？[yn] ') != 'y': break
         else:
             sys_print(u'目录非空，无法初始化', 'warn')
