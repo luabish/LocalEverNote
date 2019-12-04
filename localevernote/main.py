@@ -5,9 +5,12 @@ import sys
 from controllers import Controller, convert_html
 from exception import main_wrapper
 
-DEBUG = False
+DEBUG = True
+if DEBUG:
+    os.chdir('/Users/wubowen/SynologyDrive/Notes')
 
 
+# TODO: 彻底的国际化实现
 def sys_print(s, level='info'):
     print(('[%-4s] %s' % ((level + ' ' * 4)[:4].upper(), s.replace(u'\xa0', ' '))).encode(sys.stdin.encoding))
 
