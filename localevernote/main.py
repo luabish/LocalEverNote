@@ -4,7 +4,6 @@ import sys
 
 from controllers import Controller, convert_html
 from exception import main_wrapper
-from local import clear_dir
 
 DEBUG = False
 
@@ -50,13 +49,8 @@ def show_help(*args):
 def init(*args):
     mainController = Controller()
 
-    def clear_root():
-        if sys_input(u'初始化目录将会清除目录下所有文件，是否继续？[yn] ') != 'y': return False
-        clear_dir('.')
-        return True
-
     def _init(*args):
-        if not reduce(lambda x, y: x + y, [l for l in os.walk('.').next()[1:]]) or clear_root():
+        if not reduce(lambda x, y: x + y, [l for l in os.walk('.').next()[1:]]):
             sys_print(u'账户仅需要在第一次使用时设置一次')
             while 1:
                 isInternational = False
@@ -85,7 +79,9 @@ def init(*args):
                 else:
                     sys_print(u'登录失败')
                     if sys_input(u'重试登录？[yn] ') != 'y': break
-
+        else:
+            sys_print(u'目录非空，无法初始化', 'warn')
+            return
     if mainController.available:
         if sys_input(u'已经登录，是否要重新登录？[yn] ') == 'y': _init(*args)
     else:
