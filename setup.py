@@ -45,7 +45,7 @@ setup(
     packages=find_packages(),
 
     install_requires=['requests', 'markdown', 'evernote', 'chardet', 'html2text', 'lxml', 'selenium'],
-
+    # TODO:selenium need additional webdriver
     # List additional groups of dependencies here
     extras_require={},
 
