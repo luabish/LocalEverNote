@@ -1,18 +1,23 @@
 # coding=utf-8
+import os
 from time import sleep
 
 from selenium import webdriver
+from selenium.common.exceptions import StaleElementReferenceException, ElementNotInteractableException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import StaleElementReferenceException,ElementNotInteractableException
+
+DEBUG = os.getenv('dev_debug', '')
+
 
 class TokenFetcher:
     # TODO：支持更多版本
     def __init__(self, is_international, u, p):
         self.host = 'https://app.yinxiang.com' if not is_international else 'https://evernote.com'
         _option = webdriver.ChromeOptions()
-        _option.add_argument('--headless')
+        if not DEBUG:
+            _option.add_argument('--headless')
         _option.add_argument('--disable-gpu')
         self.web_driver = webdriver.Chrome(chrome_options=_option)
         self.wait = WebDriverWait(self.web_driver, 5)

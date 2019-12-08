@@ -3,12 +3,12 @@ import getpass
 import os
 import sys
 
+import localevernote
 from controllers import Controller, convert_html
 from evernoteapi.dev_token import TokenFetcher
 from exception import main_wrapper
 
-DEBUG = False
-# TODO: better way to develop
+DEBUG = os.getenv('dev_debug', '')
 if DEBUG:
     os.chdir('/Users/wubowen/Desktop/test')
 
