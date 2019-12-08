@@ -17,7 +17,7 @@ class TokenFetcher:
         self.web_driver = webdriver.Chrome(chrome_options=_option)
         self.wait = WebDriverWait(self.web_driver, 5)
         self.u = u
-        self.p = p
+        self.p = p.strip()
 
     def fetch_token(self):
         self.web_driver.get(self.host + '/Login.action?targetUrl=%2Fapi%2FDeveloperToken.action')
