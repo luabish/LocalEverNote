@@ -168,7 +168,7 @@ class Storage(object):
         r = []  # (filename, status) 1 for wrong placement, 2 for too large, 3 for missing main file
         notebooks, notes = os.walk('.').next()[1:]
         for note in notes:
-            if note not in ('user.cfg', '.DS_Store'): r.append((self.__str_l2c(note), 1))
+            if note not in ('user.cfg', '.DS_Store', '.credential'): r.append((self.__str_l2c(note), 1))
         for notebook in notebooks:
             if notebook == '.DS_Store':  # Mac .DS_Store ignorance
                 r.append(('.DS_Store', 1))
