@@ -1,5 +1,5 @@
 # coding=utf8
-""" A command line tool to use evernote locally
+""" A command line tool to use evernote/印象笔记 locally
 See:
 https://github.com/luabish/LocalEverNote
 """
@@ -20,14 +20,14 @@ setup(
 
     version=localevernote.__version__,
 
-    description='Use Evernote Locally.为印象笔记增加本地化的使用方式',
+    description='Sync and Use Evernote Locally.',
 
     long_description=long_description,
 
     url='https://github.com/luabish/LocalEverNote',
 
     author='Luabish',
-    author_email='',
+    author_email='wubw@pku.edu.cn',
 
     license='MIT',
 
@@ -39,7 +39,7 @@ setup(
         'Programming Language :: Python :: 2.7',
     ],
 
-    keywords='evernote markdown python',
+    keywords='evernote markdown python 印象笔记',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
@@ -55,5 +55,5 @@ setup(
             'len = localevernote.main:main'
         ]
     },
-    python_requires='<3',
+    python_requires='>=2.7, <3',
 )
