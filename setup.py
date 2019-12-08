@@ -3,7 +3,7 @@
 See:
 https://github.com/luabish/LocalEverNote
 """
-
+import localevernote
 from codecs import open
 from os import path
 
@@ -17,7 +17,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='localevernote',
 
-    version='0.2',
+    version=localevernote.__version__,
 
     description='Use Evernote Locally.为印象笔记增加本地化的使用方式',
 

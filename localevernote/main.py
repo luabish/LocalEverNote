@@ -64,6 +64,7 @@ def check_files_format(fn):
 
 
 def show_help(*args):
+    print('当前版本为：%s' % localevernote.__version__)
     for fn, h in argDict.iteritems():
         print('%-10s: %s' % (fn, h[1].decode('utf8').encode(sys.stdin.encoding)))
 
