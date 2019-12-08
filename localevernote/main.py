@@ -10,7 +10,7 @@ from exception import main_wrapper
 
 DEBUG = os.getenv('dev_debug', '')
 if DEBUG:
-    os.chdir('/Users/wubowen/Desktop/test')
+    os.chdir(os.environ['test_dir'])
 
 
 # TODO: 彻底的国际化实现
