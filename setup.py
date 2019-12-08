@@ -3,11 +3,12 @@
 See:
 https://github.com/luabish/LocalEverNote
 """
-import localevernote
 from codecs import open
 from os import path
 
 from setuptools import setup, find_packages
+
+import localevernote
 
 here = path.abspath(path.dirname(__file__))
 
@@ -54,4 +55,5 @@ setup(
             'len = localevernote.main:main'
         ]
     },
+    python_requires='<3',
 )
