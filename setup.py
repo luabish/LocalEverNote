@@ -20,7 +20,7 @@ setup(
 
     version=localevernote.__version__,
 
-    description='Sync and Use Evernote Locally.',
+    description='为印象笔记增加本地化的使用体验',
 
     long_description=long_description,
 
@@ -42,13 +42,10 @@ setup(
 
     keywords='evernote markdown python 印象笔记',
 
-    # You can just specify the packages manually here if your project is
-    # simple. Or you can use find_packages().
     packages=find_packages(),
 
     install_requires=['requests', 'markdown', 'evernote', 'chardet', 'html2text', 'lxml', 'selenium'],
-    # TODO:selenium need additional webdriver
-    # List additional groups of dependencies here
+
     extras_require={},
 
     entry_points={

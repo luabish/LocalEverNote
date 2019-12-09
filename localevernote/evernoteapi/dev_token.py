@@ -3,7 +3,8 @@ import os
 from time import sleep
 
 from selenium import webdriver
-from selenium.common.exceptions import StaleElementReferenceException, ElementNotInteractableException, NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException, ElementNotInteractableException, \
+    NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
