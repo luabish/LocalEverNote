@@ -1,5 +1,0 @@
-build/*
-dist/*
-LocalNote.egg-info/*
-*.pyc
-*.swp
