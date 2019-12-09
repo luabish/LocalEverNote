@@ -14,7 +14,7 @@ class EvernoteController(object):
     def __init__(self, token, isSpecialToken=False, sandbox=False, isInternational=False, notebooks=None):
         self.token = token
         if sandbox:
-            self.client = EvernoteClient(token=self.token)
+            self.client = EvernoteClient(token=self.token, service_host='sandbox.yinxiang.com')
         elif isInternational:
             self.client = EvernoteClient(token=self.token, service_host='www.evernote.com')
         else:
