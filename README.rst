@@ -1,5 +1,5 @@
 LocalEverNote
-=========
+=============
 
 **INTRODUCTION**
 LocalEverNote aims users to sync specific EverNote contents to their local drives
