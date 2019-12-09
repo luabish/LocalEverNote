@@ -9,12 +9,16 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
 DEBUG = os.getenv('dev_debug', '')
+HOSTS = {
+    0: 'https://app.yinxiang.com',
+    1: 'https://www.evernote.com',
+    2: 'https://sandbox.yinxiang.com',
+}
 
 
 class TokenFetcher:
-    # TODO：支持更多版本
-    def __init__(self, is_international, u, p):
-        self.host = 'https://app.yinxiang.com' if not is_international else 'https://evernote.com'
+    def __init__(self, product_type, u, p):
+        self.host = HOSTS[product_type]
         _option = webdriver.ChromeOptions()
         if not DEBUG:
             _option.add_argument('--headless')
@@ -58,4 +62,4 @@ class TokenFetcher:
 
 
 if __name__ == '__main__':
-    print(TokenFetcher(False, 'imwubowen@gmail.com', 'i@xiangy').fetch_token())
+    print(TokenFetcher(2, 'imwubowen@gmail.com', 'sqBng7$P^Q').fetch_token())
