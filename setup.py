@@ -1,7 +1,7 @@
 # coding=utf8
 """ A command line tool to use evernote/印象笔记 locally
 See:
-https://github.com/luabish/LocalEverNote
+https://github.com/luabish/LocalEvernote
 """
 from codecs import open
 from os import path
@@ -24,9 +24,9 @@ setup(
 
     long_description=long_description,
 
-    url='https://github.com/luabish/LocalEverNote',
+    url='https://github.com/luabish/LocalEvernote',
 
-    author='Luabish',
+    author='luabish',
 
     author_email='imwubowen@gmail.com',
 

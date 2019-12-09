@@ -13,7 +13,6 @@ if DEBUG:
     os.chdir(os.environ['test_dir'])
 
 
-# TODO: 彻底的国际化实现
 def sys_print(s, level='info'):
     print(('[%-4s] %s' % ((level + ' ' * 4)[:4].upper(), s.replace(u'\xa0', ' '))).encode(sys.stdin.encoding))
 
@@ -76,20 +75,26 @@ def init(*args):
         if not reduce(lambda x, y: x + y, [l for l in os.walk('.').next()[1:]]):
             sys_print(u'账户仅需要在第一次使用时设置一次')
             while 1:
-                isInternational = False
-                expireTime = None
-                sandbox = sys_input(u'是否是沙盒环境[yn]>') == 'y'
-                if not sandbox: isInternational = sys_input(u'是否是国际版用户？[yn]>') == 'y'
-                u = sys_input('username')
+                product_type = sys_input(u'请选择版本[0]中国版印象笔记[1]国际版Evernote[2]中国版沙盒>')
+                if product_type == '0':
+                    is_international, is_sandbox = False, False
+                elif product_type == '1':
+                    sys_print(u'目前尚未支持国际版', 'error')
+                    break
+                elif product_type == '2':
+                    is_international, is_sandbox = False, True
+                else:
+                    continue
+                u = sys_input(u'登陆邮箱>')
                 p = getpass.getpass()
-                token = TokenFetcher(isInternational, u, p).fetch_token()
+                token = TokenFetcher(int(product_type), u, p).fetch_token()
                 if token:
-                    mainController.log_in(token=token, isSpecialToken=True, sandbox=sandbox,
-                                          isInternational=isInternational, expireTime=expireTime)
+                    mainController.log_in(token=token, isSpecialToken=True, sandbox=is_sandbox,
+                                          isInternational=is_international, expireTime=None)
                     if mainController.available:
                         mainController.ls.update_config(token=token, isSpecialToken=True,
-                                                        sandbox=sandbox, isInternational=isInternational,
-                                                        expireTime=expireTime)
+                                                        sandbox=is_sandbox, isInternational=is_international,
+                                                        expireTime=None)
                         sys_print(u'登陆成功')
                         mainController.ls.save_credential(u, p)
                         sys_print(u'保存用户身份成功')
