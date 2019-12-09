@@ -27,7 +27,8 @@ setup(
     url='https://github.com/luabish/LocalEverNote',
 
     author='Luabish',
-    author_email='wubw@pku.edu.cn',
+
+    author_email='imwubowen@gmail.com',
 
     license='MIT',
 
