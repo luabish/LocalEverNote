@@ -3,9 +3,8 @@ import os
 from time import sleep
 
 from selenium import webdriver
-from selenium.common.exceptions import StaleElementReferenceException, ElementNotInteractableException, \
-    NoSuchElementException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -24,7 +23,11 @@ class TokenFetcher:
         if not DEBUG:
             _option.add_argument('--headless')
         _option.add_argument('--disable-gpu')
-        self.web_driver = webdriver.Chrome(chrome_options=_option)
+        # 本地web_driver
+        # self.web_driver = webdriver.Chrome(chrome_options=_option)
+        self.web_driver = webdriver.Remote(
+            command_executor=os.getenv('selenium_hub', 'http://cloud.wbw.im:4445/wd/hub'),
+            desired_capabilities=DesiredCapabilities().CHROME.copy())
         self.wait = WebDriverWait(self.web_driver, 5)
         self.u = u
         self.p = p.strip()
@@ -46,24 +49,17 @@ class TokenFetcher:
             sleep(0.5)
             submit_button.click()
             sleep(1)
-        except StaleElementReferenceException:
-            # password not right
-            return None
-        except ElementNotInteractableException:
-            # user not right
-            return None
-        except NoSuchElementException:
-            # password not right
-            return None
 
-        remove_btn = self.web_driver.find_elements_by_name('remove')
-        if remove_btn:
-            remove_btn[0].click()
-            sleep(0.5)
+            remove_btn = self.web_driver.find_elements_by_name('remove')
+            if remove_btn:
+                remove_btn[0].click()
+                sleep(0.5)
 
-        self.web_driver.find_element_by_name('create').click()
+            self.web_driver.find_element_by_name('create').click()
 
-        return self.web_driver.find_element_by_name('accessToken').get_attribute('value')
+            return self.web_driver.find_element_by_name('accessToken').get_attribute('value')
+        finally:
+            self.web_driver.quit()
 
 
 if __name__ == '__main__':

@@ -44,7 +44,15 @@ setup(
 
     packages=find_packages(),
 
-    install_requires=['requests', 'markdown', 'evernote', 'chardet', 'html2text', 'lxml', 'selenium'],
+    install_requires=[
+        'requests',
+        'markdown',
+        'evernote',
+        'chardet',
+        'html2text',
+        'lxml',
+        'selenium'
+    ],
 
     extras_require={},
 
