@@ -86,7 +86,7 @@ class Controller(object):
                     delIndex.append(i)
                     break
                 else:  # note exists locally not online
-                    r.append(([nbName, lNote[0]], 0))
+                    r.append(([nbName, lNote[0]], 1))
             eNotes = [n for i, n in enumerate(eNotes) if i not in delIndex]
             # note exists online not locally
             for eNote in eNotes: r.append(([nbName, eNote[0]], -1))
