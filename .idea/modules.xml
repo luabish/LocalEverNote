@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/32_local_evernote.iml" filepath="$PROJECT_DIR$/.idea/32_local_evernote.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/08-local-evernote.iml" filepath="$PROJECT_DIR$/.idea/08-local-evernote.iml" />
     </modules>
   </component>
 </project>
