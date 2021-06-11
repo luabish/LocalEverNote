@@ -8,7 +8,6 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
-DEBUG = os.getenv('dev_debug', '')
 HOSTS = {
     0: 'https://app.yinxiang.com',
     1: 'https://www.evernote.com',
@@ -20,13 +19,12 @@ class TokenFetcher:
     def __init__(self, product_type, u, p):
         self.host = HOSTS[product_type]
         _option = webdriver.ChromeOptions()
-        if not DEBUG:
-            _option.add_argument('--headless')
+        # _option.add_argument('--headless')
         _option.add_argument('--disable-gpu')
         # 本地web_driver
         # self.web_driver = webdriver.Chrome(chrome_options=_option)
         self.web_driver = webdriver.Remote(
-            command_executor=os.getenv('selenium_hub', 'http://cloud.wbw.im:4445/wd/hub'),
+            command_executor='http://127.0.0.1:4444/wd/hub',
             desired_capabilities=DesiredCapabilities().CHROME.copy())
         self.wait = WebDriverWait(self.web_driver, 5)
         self.u = u
@@ -63,4 +61,4 @@ class TokenFetcher:
 
 
 if __name__ == '__main__':
-    print(TokenFetcher(2, 'imwubowen@gmail.com', 'sqBng7$P^Q').fetch_token())
+    print(TokenFetcher(2, os.getenv("LEN_SB_EMAIL"), os.getenv("LEN_SB_PWD")).fetch_token())
