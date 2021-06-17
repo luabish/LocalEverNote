@@ -2,12 +2,8 @@
 
 ## 简介
 
-[English Readme][2]
-
 本项目基于[LocalNote][1]，方便用户以本地文件的形式使用evernote/印象笔记，比如使用任意编辑器编辑markdown、使用私有云备份笔记等。
-由于原项目已很长时间没有维护过，有些功能不能正常使用，所以新开此项目。由于印象笔记/Evernote是分开的两个版本，无法互通，而开发者本人是中国版印象笔记的用户，
-所以开发会以对印象笔记的支持为第一优先级，目前暂不支持国际版。
-欢迎各位大佬添砖加瓦。
+由于原项目已很长时间没有维护过，有些功能不能正常使用，所以新开此项目。由于印象笔记/Evernote是分开的两个版本，无法互通，精力有限，目前只支持印象笔记
 
 ## 安装
 
@@ -48,6 +44,8 @@ len push
 
 `len help`
 
+## TODO
+
+- 本地删除文件，pull后会拉回来；
 
 [1]: https://github.com/littlecodersh/LocalNote
-[2]: https://github.com/luabish/LocalEvernote/blob/master/README_EN.md
