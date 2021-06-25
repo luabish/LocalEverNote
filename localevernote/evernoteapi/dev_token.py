@@ -1,5 +1,6 @@
 # coding=utf-8
 import os
+import sys
 from time import sleep
 
 from selenium import webdriver
@@ -7,6 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
+from urllib3.exceptions import MaxRetryError
 
 HOSTS = {
     0: 'https://app.yinxiang.com',
@@ -23,9 +25,14 @@ class TokenFetcher:
         _option.add_argument('--disable-gpu')
         # 本地web_driver
         # self.web_driver = webdriver.Chrome(chrome_options=_option)
-        self.web_driver = webdriver.Remote(
-            command_executor='http://127.0.0.1:4444/wd/hub',
-            desired_capabilities=DesiredCapabilities().CHROME.copy())
+        try:
+            self.web_driver = webdriver.Remote(
+                command_executor='http://127.0.0.1:4444/wd/hub',
+                desired_capabilities=DesiredCapabilities().CHROME.copy())
+        except MaxRetryError:
+            print "请检查selenium是否正常：", 'http://127.0.0.1:4444/wd/hub'
+            sys.exit(1)
+
         self.wait = WebDriverWait(self.web_driver, 5)
         self.u = u
         self.p = p.strip()
