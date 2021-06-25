@@ -52,6 +52,7 @@ def check_files_format(fn):
                                                     sandbox=sandbox, isInternational=is_international,
                                                     expireTime=expire_time)
                     sys_print(u'刷新token成功')
+                    return fn(mainController, *args, **kwargs)
                 else:
                     sys_print(u'刷新token失败')
             else:
